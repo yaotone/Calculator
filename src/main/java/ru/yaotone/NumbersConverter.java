@@ -3,16 +3,19 @@ package ru.yaotone;
 import java.util.HashMap;
 import java.util.MissingFormatArgumentException;
 
-public class Converter {
+import ru.yaotone.exception.InvalidNumberValue;
+
+public class NumbersConverter{
 
     public static int StringToInt(String number){
-        if(Integer.parseInt(number) < 0){
+        int parsedValue = Integer.parseInt(number);
+        if(parsedValue < 0){
             throw new InvalidNumberValue("Введеннная цифра слишком маленькая");
-        } else if (Integer.parseInt(number) > 10) {
+        } else if (parsedValue > 10) {
             throw new InvalidNumberValue("Введеннная цифра слишком большая");
         }
         else {
-            return Integer.parseInt(number);
+            return parsedValue;
         }
     }
 
@@ -36,9 +39,8 @@ public class Converter {
                 }
                 prevValue = currentValue;
             }
-            if (result > 10){
-                throw new InvalidNumberValue("Введенное число слишком большое");
-            }
+            if (result > 10) throw new InvalidNumberValue("Введенное число слишком большое");
+
             return result;
         }
         catch (NullPointerException e){
@@ -61,11 +63,5 @@ public class Converter {
         }
 
         return roman.toString();
-    }
-}
-
-class InvalidNumberValue extends RuntimeException{
-    public InvalidNumberValue(String message){
-        super(message);
     }
 }

@@ -1,18 +1,16 @@
 package ru.yaotone;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        System.out.println("Введите выражение");
+        System.out.print("Введите выражение \n");
 
-        String number1 = input.next();
-        String operation = input.next();
-        String number2 = input.next();
+        String[] UserInput = input.nextLine().split(" ");
 
-        String answer = Calculator.calculate(number1, operation, number2);
+        Calculator calculator = new NumberCalculator();
+        String answer = calculator.calculate(UserInput[0], UserInput[1], UserInput[2]);
         System.out.println(answer);
 
         input.close();

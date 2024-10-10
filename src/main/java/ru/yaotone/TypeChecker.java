@@ -1,31 +1,23 @@
 package ru.yaotone;
 
-import com.sun.jdi.InvalidTypeException;
+import ru.yaotone.exception.DifferentTypesException;
 
-import javax.management.relation.InvalidRelationTypeException;
-import java.security.InvalidParameterException;
-import java.util.MissingFormatArgumentException;
 import java.util.regex.Pattern;
 
 public class TypeChecker {
 
-    enum NumberType{
-        Arabic,
-        Roman
-    }
+    final static Pattern romanPattern = Pattern.compile("^(I{1,3}|IV|VI{0,3}|IX|X)$");
+    final static Pattern arabicPattern = Pattern.compile("-?\\d+");
 
-    static Pattern romanPattern = Pattern.compile("^(I{1,3}|IV|VI{0,3}|IX|X)$");
-    static Pattern arabicPattern = Pattern.compile("-?\\d+");
-
-    public static NumberType defineType(String num1, String num2){
+    public static CalculatorType defineType(String num1, String num2){
         if(TypeChecker.isArabic(num1) != TypeChecker.isArabic(num2)){
             throw new DifferentTypesException("Введенны числа разных типов");
         }
         else if(TypeChecker.isArabic(num1)) {
-            return NumberType.Arabic;
+            return CalculatorType.ARABIC;
         }
         else {
-            return NumberType.Roman;
+            return CalculatorType.ROMAN;
         }
     }
 
@@ -38,8 +30,3 @@ public class TypeChecker {
     }
 }
 
-class DifferentTypesException extends RuntimeException{
-    public DifferentTypesException(String message){
-        super(message);
-    }
-}
